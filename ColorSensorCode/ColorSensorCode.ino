@@ -115,6 +115,9 @@ void loop() {
 
   Serial.print(minString);//print the minString of all
 }
+
+
+
 //calculate the distance of the color based on calibrated color
 long calDisColorRed(int cR, int cG, int cB) {
   //cR - myred.red
@@ -225,7 +228,6 @@ long calDisColorWhite(int cR, int cG, int cB) {
   d3 = d3 * d3;
   return sqrt(d1 + d2 + d3);
 }
-
 
 String returnColor(int minOfAll){
    long distBlue = calDisColorBlue(r, g, b);
