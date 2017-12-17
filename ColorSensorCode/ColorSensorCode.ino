@@ -1,3 +1,6 @@
+#include <Adafruit_CircuitPlayground.h>
+#include <Adafruit_Circuit_Playground.h>
+
 #include <Wire.h>
 #include "Adafruit_TCS34725.h"
 // Pick analog outputs, for the UNO these three work well
@@ -96,53 +99,7 @@ void loop() {
   long minOfAll = 1000;
   String minString;
 
-  long distBlue = calDisColorBlue(r, g, b);
-  if (minOfAll > distBlue) {
-    minOfAll = distBlue;
-    minString = "blue";
-  }
-  long distRed = calDisColorRed(r, g, b);
-  if (minOfAll > distRed) {
-    minOfAll = distRed;
-    minString = "red";
-  }
-
-  long distGreen = calDisColorGreen(r, g, b);
-  if (minOfAll > distGreen) {
-    minOfAll = distGreen;
-    minString = "green";
-  }
-  long distCyan = calDisColorCyan(r, g, b);
-  if (minOfAll > distCyan) {
-    minOfAll = distCyan;
-    minString = "cyan";
-  }
-  long distYellow = calDisColorYellow(r, g, b);
-  if (minOfAll > distYellow) {
-    minOfAll = distYellow;
-    minString = "yellow";
-  }
-  long distMagenta = calDisColorMagenta(r, g, b);
-  if (minOfAll > distMagenta) {
-    minOfAll = distMagenta;
-    minString = "magenta";
-  }
-  long distGray = calDisColorGray(r, g, b);
-  if (minOfAll > distGray) {
-    minOfAll = distGray;
-    minString = "gray";
-  }
-  long distBlack = calDisColorBlack(r, g, b);
-  if (minOfAll > distBlack) {
-    minOfAll = distBlack;
-    minString = "black";
-  }
-
-  long distWhite = calDisColorWhite(r, g, b);
-  if (minOfAll > distWhite) {
-    minOfAll = distWhite;
-    minString = "white";
-  }
+  String returnColor(int minOfAll);
 
   Serial.print(distRed);
   Serial.print(" ");
@@ -269,5 +226,56 @@ long calDisColorWhite(int cR, int cG, int cB) {
   return sqrt(d1 + d2 + d3);
 }
 
+
+String returnColor(int minOfAll){
+   long distBlue = calDisColorBlue(r, g, b);
+  if (minOfAll > distBlue) {
+    minOfAll = distBlue;
+    minString = "blue";
+  }
+  long distRed = calDisColorRed(r, g, b);
+  if (minOfAll > distRed) {
+    minOfAll = distRed;
+    minString = "red";
+  }
+
+  long distGreen = calDisColorGreen(r, g, b);
+  if (minOfAll > distGreen) {
+    minOfAll = distGreen;
+    minString = "green";
+  }
+  long distCyan = calDisColorCyan(r, g, b);
+  if (minOfAll > distCyan) {
+    minOfAll = distCyan;
+    minString = "cyan";
+  }
+  long distYellow = calDisColorYellow(r, g, b);
+  if (minOfAll > distYellow) {
+    minOfAll = distYellow;
+    minString = "yellow";
+  }
+  long distMagenta = calDisColorMagenta(r, g, b);
+  if (minOfAll > distMagenta) {
+    minOfAll = distMagenta;
+    minString = "magenta";
+  }
+  long distGray = calDisColorGray(r, g, b);
+  if (minOfAll > distGray) {
+    minOfAll = distGray;
+    minString = "gray";
+  }
+  long distBlack = calDisColorBlack(r, g, b);
+  if (minOfAll > distBlack) {
+    minOfAll = distBlack;
+    minString = "black";
+  }
+
+  long distWhite = calDisColorWhite(r, g, b);
+  if (minOfAll > distWhite) {
+    minOfAll = distWhite;
+    minString = "white";
+  }
+  return minString
+}
 
 
