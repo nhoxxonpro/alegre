@@ -4,7 +4,7 @@
 
 class ColorSensorLib {
   public:
-    ColorSensorLib(int r, int b, int g);
+    ColorSensorLib();
     String returnColor(int minOfAll);
     //    long calDisColorRed(int cR, int cG, int cB);
     //    long calDisColorBlue(int cR, int cG, int cB);

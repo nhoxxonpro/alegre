@@ -7,6 +7,7 @@
 #define redpin 3
 #define greenpin 5
 #define bluepin 6
+#define commonAnode true
 int myred[3] =     {195, 40, 45};
 int mygreen[3] =   {79, 100, 80};
 int myblue[3] =    {47, 80, 134};
@@ -20,6 +21,8 @@ long minOfAll = 1000;
 float r, g, b;
 String minString;
 uint16_t clear, red, green, blue;
+byte gammatable[256];
+Adafruit_TCS34725 tcs = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_50MS, TCS34725_GAIN_4X);
 //long calDisColorBlue;
 //long calDisColorRed;
 //long calDisColorGreen;
@@ -29,12 +32,18 @@ uint16_t clear, red, green, blue;
 //long calDisColorMagenta;
 //long calDisColorCyan;
 //long calDisColorWhite;
-ColorSensorLib::ColorSensorLib(int r, int b, int g){
-  r = r;
-  b = b;
-  g = g;
-  Adafruit_TCS34725 tcs = Adafruit_TCS34725(TCS34725_INTEGRATIONTIME_50MS, TCS34725_GAIN_4X);
-  byte gammatable[256];
+
+
+ColorSensorLib::ColorSensorLib() {
+  Serial.begin(9600);
+  Serial.println("Color View Test!");
+  if (tcs.begin()) {
+    Serial.println("Found sensor");
+  } else {
+    Serial.println("No TCS34725 found ... check your connections");
+    while (1); // halt!
+  }
+
   pinMode(redpin, OUTPUT);
   pinMode(greenpin, OUTPUT);
   pinMode(bluepin, OUTPUT);
@@ -49,9 +58,10 @@ ColorSensorLib::ColorSensorLib(int r, int b, int g){
     } else {
       gammatable[i] = x;
     }
+  }
 }
 
-String returnColor(int r, int g, int b){
+String returnColor(int r, int g, int b) {
   long d1 = r - myblue[0];
   d1 = d1 * d1;
   //g - myblue.green
@@ -92,7 +102,7 @@ String returnColor(int r, int g, int b){
   long d12 = b - yellow[2];
   d12 = d12 * d12;
   long distYellow = sqrt(d10 + d11 + d12);
-  
+
   long d13 = r - cyan[0];
   d13 = d13 * d13;
   //g - myblue.green
@@ -103,7 +113,7 @@ String returnColor(int r, int g, int b){
   d15 = d15 * d15;
   long distCyan = sqrt(13 + d14 + d15);
 
-   long d16 = r - magenta[0];
+  long d16 = r - magenta[0];
   d16 = d16 * d16;
   //g - myblue.green
   long d17 = g - magenta[1];
@@ -113,7 +123,7 @@ String returnColor(int r, int g, int b){
   d18 = d18 * d18;
   long distMagenta = sqrt(d16 + d17 + d18);
 
-   long d19 = r - black[0];
+  long d19 = r - black[0];
   d19 = d19 * d19;
   //g - myblue.green
   long d20 = g - black[1];
@@ -123,7 +133,7 @@ String returnColor(int r, int g, int b){
   d21 = d21 * d21;
   long distBlack = sqrt(d19 + d20 + d21);
 
-   long d23 = r - white[0];
+  long d23 = r - white[0];
   d23 = d23 * d23;
   //g - myblue.green
   long d24 = g - white[1];
@@ -133,7 +143,7 @@ String returnColor(int r, int g, int b){
   d22 = d22 * d22;
   long distWhite = sqrt(d23 + d24 + d22);
 
-   long d25 = r - gray[0];
+  long d25 = r - gray[0];
   d25 = d25 * d25;
   //g - myblue.green
   long d26 = g - gray[1];
@@ -147,45 +157,45 @@ String returnColor(int r, int g, int b){
     minOfAll = distBlue;
     minString = "blue";
   }
-  
-  
+
+
   if (minOfAll > distRed) {
     minOfAll = distRed;
     minString = "red";
   }
 
-//  long distGreen = calDisColorGreen(r, g, b);
+  //  long distGreen = calDisColorGreen(r, g, b);
   if (minOfAll > distGreen) {
     minOfAll = distGreen;
     minString = "green";
   }
-//  long distCyan = calDisColorCyan(r, g, b);
+  //  long distCyan = calDisColorCyan(r, g, b);
   if (minOfAll > distCyan) {
     minOfAll = distCyan;
     minString = "cyan";
   }
-//  long distYellow = calDisColorYellow(r, g, b);
+  //  long distYellow = calDisColorYellow(r, g, b);
   if (minOfAll > distYellow) {
     minOfAll = distYellow;
     minString = "yellow";
   }
-//  long distMagenta = calDisColorMagenta(r, g, b);
+  //  long distMagenta = calDisColorMagenta(r, g, b);
   if (minOfAll > distMagenta) {
     minOfAll = distMagenta;
     minString = "magenta";
   }
-//  long distGray = calDisColorGray(r, g, b);
+  //  long distGray = calDisColorGray(r, g, b);
   if (minOfAll > distGray) {
     minOfAll = distGray;
     minString = "gray";
   }
-//  long distBlack = calDisColorBlack(r, g, b);
+  //  long distBlack = calDisColorBlack(r, g, b);
   if (minOfAll > distBlack) {
     minOfAll = distBlack;
     minString = "black";
   }
 
-//  long distWhite = calDisColorWhite(r, g, b);
+  //  long distWhite = calDisColorWhite(r, g, b);
   if (minOfAll > distWhite) {
     minOfAll = distWhite;
     minString = "white";
@@ -307,7 +317,7 @@ String returnColor(int r, int g, int b){
 //  //b - myred.blue
 //  long d3 = b - white[2];
 //  d3 = d3 * d3;
-//  return sqrt(d1 + d2 + d3);  
+//  return sqrt(d1 + d2 + d3);
 //}
 
 
