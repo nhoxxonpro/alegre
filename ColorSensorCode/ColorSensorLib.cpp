@@ -38,6 +38,17 @@ ColorSensorLib::ColorSensorLib(int r, int b, int g){
   pinMode(redpin, OUTPUT);
   pinMode(greenpin, OUTPUT);
   pinMode(bluepin, OUTPUT);
+  for (int i = 0; i < 256; i++) {
+    float x = i;
+    x /= 255;
+    x = pow(x, 2.5);
+    x *= 255;
+
+    if (commonAnode) {
+      gammatable[i] = 255 - x;
+    } else {
+      gammatable[i] = x;
+    }
 }
 
 String returnColor(int r, int g, int b){
