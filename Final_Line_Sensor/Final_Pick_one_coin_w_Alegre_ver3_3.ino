@@ -52,7 +52,7 @@ float pos;
 float oldpos;
 float start_dis = .25;
 
-float mov_hor[] = {  36.5, 9.1, 2.7, 8, 4.1, 3.25,  2.8};  //[0]: distance from center to the spoke, 
+float mov_hor[] = {  36.5, 9.1, 2.2, 8, 4.1, 3.25,  2.2};  //[0]: distance from center to the spoke, 
                                                  //[1]: dis within center, 
                                                  //[2]: backing up dis coming from spoke , 
                                                  //[3]: dis between each junction,
@@ -60,7 +60,7 @@ float mov_hor[] = {  36.5, 9.1, 2.7, 8, 4.1, 3.25,  2.8};  //[0]: distance from 
 												 //[5]: distance from the edge to deliver_gray_coin distance
 												//[6]: backing up dis coming from center 
                                                                                              
-float mov_dia[] = { 52.5, 10.5, 3.2, 6.5, 4.5, 5.74, 1.5};  //[0]: distance from center to the spoke, 
+float mov_dia[] = { 52.5, 10.5, 2.8, 6.5, 4.5, 5.74, 1.1};  //[0]: distance from center to the spoke, 
                                                  //[1]: dis within center, 
                                                  //[2]: backing up dis coming from spoke , 
                                                  //[3]: dis between each junction,
@@ -104,7 +104,7 @@ int coin_color_table[NUM_SPOKE][NUM_SQUARE] = {              //coins positions f
   { 8, 3, 2, 5 },                 //[1] green_spoke  :  gray, yellow, blue, cyon
   { 3, 8, 4, 0 },                 //[2] blue_spoke   :  yellow, gray, purple, red
   { 0, 8, 5, 4 },                 //[3] yellow_spoke :  red, gray, cyon, purple
-  { 5, 5, 0, 8 },                 //[4] purple_spoke :  cyon, cyon, red, gray
+  { 5, 1, 0, 8 },                 //[4] purple_spoke :  cyon, green, red, gray
   { 4, 2, 8, 1 }                  //[3] cyon_spoke   :  purple, blue, gray, green
 };
 
@@ -131,11 +131,11 @@ int onbit_min =3;			//lower limit of recognizing the robot to be on the milstone
 //*************Servo motion
 int servo = 12;  
 int relay = 26;
-int drop_angle = 175;
-int upright_angle = 25;
-int pickup_angle = 185;
+int drop_angle = 90;
+int upright_angle = 15;
+int pickup_angle = 170;
 //**************Servo delay
-int coin_conect_delay = 4000;
+int coin_conect_delay = 20000;
 //100000
 int servo_hold_delay_upright_angle = 2500;  //delay for when servo is in upright position
 int servo_hold_delay_dropoff_angle = 1500;  //delay for when servo is in upright position
@@ -2188,7 +2188,7 @@ void pickup(){
 
 void dropoff(){
 
-  //servoTurn(upright_angle,servo_hold_delay_upright_angle);         //moves servo to upright position (0) and holds it for 500ms
+  servoTurn(upright_angle,servo_hold_delay_upright_angle);         //moves servo to upright position (0) and holds it for 500ms
   servoTurn(drop_angle, servo_hold_delay_dropoff_angle);     //moves servo to ground position (140) and holds it for 1000ms
   digitalWrite(relay, HIGH); //relay HIGH turns magnet OFFn 
   
